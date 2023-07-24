@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import './App.scss'
 import BottomResultBox from './components/BottomResultBox'
 import Footer from './components/Footer'
@@ -15,7 +15,7 @@ export interface MyResultType {
 const App = () => {
 
   const ref = useRef<HTMLTextAreaElement | null>(null);
-  const [inputs, setInputs] = useState('')
+  const [inputs, setInputs] = useState<string>('')
   const [words, setWords] = useState(0)
   const [characters, setCharacters] = useState(0)
   const [sentences, setSentences] = useState(0)
@@ -45,11 +45,21 @@ const App = () => {
     },
   ])
 
+
+  const countTheWords = useCallback((paragraph: string) => {
+    const arrOfWords = paragraph ? paragraph.trim().split(" ") : []
+    const results = [...resultBar]
+    const wordIndex = results.findIndex((item) => item.title === 'Words')
+    results[wordIndex] = { title: 'Words', value: arrOfWords.length }
+    setResultBar([...results])
+  }, [])
+
   useEffect(() => {
     if (ref.current) {
       ref.current.focus()
     }
-  }, [ref])
+    countTheWords(inputs)
+  }, [ref, inputs])
   return (
     <>
       <Navbar />
