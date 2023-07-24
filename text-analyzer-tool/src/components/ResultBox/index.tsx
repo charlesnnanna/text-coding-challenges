@@ -1,28 +1,13 @@
 import './index.scss'
+import { MyResultType } from '../../App'
 
-const ResultBox = () => {
-  const resultBar = [
-    {
-      title: 'Words',
-      value: 0,
-    },
-    {
-      title: 'Characters',
-      value: 0,
-    },
-    {
-      title: 'Sentences',
-      value: 0,
-    },
-    {
-      title: 'Paragraphs ',
-      value: 0,
-    },
-    {
-      title: 'Pronouns',
-      value: 0,
-    },
-  ]
+type ResultProps = {
+  resultBar: Array<MyResultType>,
+}
+
+const ResultBox = (props : ResultProps) => {
+
+  const { resultBar } = props
 
   return (
     <div className="result-bar">
